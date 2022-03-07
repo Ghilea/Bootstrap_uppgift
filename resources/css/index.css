@@ -1,0 +1,529 @@
+/* using focus-visible instead of normal focus to make it easier for keyboard user to navigate */
+
+:root {
+
+  /* text */
+  --text-color-primary: hsl(216, 73%, 55%);
+  --text-color-primary-hover: hsl(216 73% 55% / 0.5);
+
+  /* font */
+  --text-font-default: "Open Sans", sans-serif;
+  --text-font-primary: "Poppins", sans-serif;
+
+  /* margin */
+  --margin-6: 6em;
+  --margin-12: 12em;
+
+}
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+  background: #fff;
+  color: #666666;
+  font-family: var(--text-font-default);
+}
+
+a {
+  color: var(--text-color-primary);
+  text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus-visible {
+  color: var(--text-color-primary-hover);
+  outline: none;
+  text-decoration: none;
+}
+
+p {
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--text-font-primary);
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+/* fade in element - used at scrolling etc */
+.viewElement {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.box {
+  padding: 50px 20px;
+  margin: 0 0 7em 0;
+  box-shadow: 0 0 1.5em #e6e6e6;
+  height: 250px;
+  position: relative;
+  background: #fafafa;
+  border-radius: 0.5em;
+  opacity: 0.1;
+  transition: all 0.5s ease-in-out;
+}
+
+.box:hover,
+.box:focus-visible {
+  box-shadow: 0 0 2.5em var(--text-color-primary-hover);
+  position: relative;
+  background: var(--text-color-primary-hover);
+  color: #fff;
+}
+
+/* when hover title */
+.box .title:hover {
+  opacity: 0.5;
+}
+
+/* icon for the info on the index page*/
+/* could use this later with different images to show for each category the crimes goes under */
+.box .icon {
+  position: absolute;
+  top: -3.5em;
+  left: calc(50% - 2.5em);
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+  background: hsl(0, 0%, 100%);
+  box-shadow: 0 0 5px var(--text-color-primary);
+  background-image: url(../img/crimeIcon.svg);
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  height: 90px;
+  transition: all 0.5s;
+  z-index: 997;
+  background-color: rgba(52, 59, 64, 0.9);
+}
+
+#header #logo h1 {
+  font-size: 32px;
+  line-height: 1;
+  font-family: var(--text-font-primary);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0.1em 0 0 0;
+
+}
+
+#header #logo h1 a {
+  color: rgb(255, 255, 255);
+}
+
+#header #logo h1 a:hover {
+  opacity: 0.5;
+}
+
+/* we need to change the behavior when going out of range with our screen-size,
+we want our logo to be in middle when using size for phones / pads */
+@media (max-width: 991px) {
+  .justify-content-between {
+    justify-content: center !important;
+  }
+}
+
+#header.header-transparent {
+  background-color: transparent;
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/**
+* Desktop Navigation 
+*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar>ul>li {
+  white-space: nowrap;
+  padding: 10px 0 10px 24px;
+}
+
+.navbar a,
+.navbar a:focus-visible {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--text-font-primary);
+  color: #fff;
+  font-size: 14px;
+  padding: 0 4px;
+  white-space: nowrap;
+  transition: 0.3s;
+  letter-spacing: 0.4px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+
+.navbar>ul>li>a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: var(--text-color-primary);
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar a:hover:before,
+.navbar li:hover>a:before,
+.navbar .active:before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus-visible,
+.navbar li:hover>a {
+  color: #fff;
+}
+
+/**
+* Mobile Navigation 
+*/
+/* hide mobile menu*/
+.mobile-menu {
+  display: none;
+}
+
+/* show mobile menu if screen size is right and hide desktop menu */
+@media (max-width: 991px) {
+  
+  /* show mobile menu */
+  .mobile-menu {
+    display: block;
+  }
+
+  /* hide destop menu */
+  .navbar ul {
+    display: none;
+  }
+}
+
+/*style for mobile buttons */
+.mobile-menu :is(.menu-item, .menu-open-button) {
+  background-color: var(--text-color-primary);
+  width: 6em;
+  height: 1.8em;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  color: white;
+  text-align: center;
+  margin: 0 0 0 -3em;
+  box-shadow: 0 0 5px var(--text-color-primary);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+/* image for sub buttons */
+.mobile-menu .menu-item img {
+  padding: 1.5em;
+  margin: -1.3em;
+  width: 100%;
+}
+
+.mobile-menu .menu-item .title {
+  text-shadow: 0 0 5px rgb(0, 0, 0);
+  margin: -0.4em 0;
+}
+
+/* hidden */
+.mobile-menu .menu-open {
+  display: none;
+}
+
+/* icon for button */
+.mobile-menu .hamburger {
+  width: 25px;
+  height: 3px;
+  background: white;
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -12.5px;
+  margin-top: -1.5px;
+  transition: transform 200ms;
+}
+
+/* symbol for mobile button aka ||| */
+.mobile-menu .hamburger-1 {
+  transform: translate(0, -8px);
+}
+
+.mobile-menu .hamburger-2 {
+  transform: translate(0, 0);
+}
+
+.mobile-menu .hamburger-3 {
+  transform: translate(0, 8px);
+}
+
+/* when open transform to an X */
+.mobile-menu .menu-open:checked+.menu-open-button .hamburger-1 {
+  transform: translate(0, 0) rotate(45deg);
+}
+
+.mobile-menu .menu-open:checked+.menu-open-button .hamburger-2 {
+  transform: translate(0, 0) scale(0.1, 1);
+}
+
+.mobile-menu .menu-open:checked+.menu-open-button .hamburger-3 {
+  transform: translate(0, 0) rotate(-45deg);
+}
+
+/*hover effect subButtons */
+.mobile-menu .menu-item:hover {
+  box-shadow: inset 0 0 10px rgb(255, 255, 255);
+}
+
+/* subButtons for mobile button */
+/* standard for all of them */
+.mobile-menu .menu-item {
+  display: none;
+  border-radius: 0;
+}
+
+/* subButtons getting their own things */
+.mobile-menu .menu-item:nth-child(3) {
+  transform: translate(2.35em, 0);
+  border-top-left-radius: 1em;
+}
+
+.mobile-menu .menu-item:nth-child(4) {
+  transform: translate(-4.5em, -2.5em);
+}
+
+.mobile-menu .menu-item:nth-child(5) {
+  border-bottom-right-radius: 1em;
+  transform: translate(0.5em, -2.5em);
+}
+
+/* main buttons */
+.mobile-menu .menu-open-button {
+  z-index: 2;
+  transition-duration: 400ms;
+  transform: scale(1.1) translate(0, 0);
+  cursor: pointer;
+}
+
+/* hover effect */
+.mobile-menu .menu-open-button:hover {
+  opacity: 0.5;
+  transform: scale(1.2) translate(0, 0);
+}
+
+/* when open make it looks like a close button */
+.mobile-menu .menu-open:checked+.menu-open-button {
+  transition-timing-function: linear;
+  transition-duration: 200ms;
+  transform: scale(0.8) translate(0, 0.5em);
+}
+
+/* for all buttons when open the main button */
+.mobile-menu .menu-open:checked~.menu-item {
+  display: block;
+  opacity: 0;
+}
+
+/* button 1 - open*/
+.mobile-menu .menu-open:checked~.menu-item:nth-child(3) {
+  animation: size 160ms ease-in-out forwards,
+    moveBtn1 240ms ease-in-out forwards;
+  z-index: 2;
+}
+
+/* button 2 - open */
+.mobile-menu .menu-open:checked~.menu-item:nth-child(4) {
+  animation: size 240ms ease-in-out 240ms forwards,
+    moveBtn2 240ms ease-in-out 180ms forwards;
+}
+
+/* button 3 - open*/
+.mobile-menu .menu-open:checked~.menu-item:nth-child(5) {
+  animation: size 240ms ease-in-out 440ms forwards,
+    moveBtn3 240ms ease-in-out 380ms forwards;
+}
+
+/* animation effects for sub buttons, translade move the element to right spot */
+@keyframes size {
+  to {
+    width: 5em;
+    height: 3.5em;
+  }
+}
+
+@keyframes moveBtn1 {
+  to {
+    opacity: 1;
+    transform: translate(-4.5em, -3em);
+  }
+}
+
+@keyframes moveBtn2 {
+  to {
+    opacity: 1;
+    transform: translate(0.5em, -3em);
+  }
+}
+
+@keyframes moveBtn3 {
+  to {
+    opacity: 1;
+    transform: translate(5.5em, -3em);
+  }
+}
+
+/*--------------------------------------------------------------
+# home Section
+--------------------------------------------------------------*/
+#home {
+  width: 100%;
+  height: 100vh;
+  background: url(../img/bg.jpg) top center;
+  background-size: cover;
+}
+
+/* fixate the bg image if width is higher. Bg image will stay at the same place when scrolling */
+@media (min-width: 1024px) {
+  #home {
+    background-attachment: fixed;
+  }
+}
+
+/* add a darker layer on the bg-image */
+#home:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* fade in text under #home .container + a few other things*/
+#home .container {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  animation: fadeInHome 1.5s ease-in-out forwards;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* animation goes to - its started with 0 in size and opacity*/
+@keyframes fadeInHome {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#home h1 {
+  line-height: 56px;
+  text-shadow: 0 0 5px black;
+}
+
+/* if screen-size goes under change font-size etc to fit better*/
+@media (max-width: 768px) {
+  #home h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Sections
+--------------------------------------------------------------*/
+
+/* stats Section
+--------------------------------*/
+.counters h3 {
+  font-family: var(--text-font-primary);
+}
+
+/* info Section
+--------------------------------*/
+#info .section-header {
+  padding: var(--margin-12) 0 8em 0;
+}
+
+/* about Section
+--------------------------------*/
+#about .section-header {
+  margin: var(--margin-12) 0 var(--margin-6) 0;
+}
+
+#about h4 {
+  margin: 2.5em 0 0.5em 0;
+}
+
+#about p {
+  margin: 0;
+}
+
+/* view Section
+--------------------------------*/
+#view .section-header {
+  margin: var(--margin-12) 0 0 0;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+footer {
+  margin: var(--margin-12) 0 0 0;
+}
+
+.copyright {
+  background: #343b40;
+  font-size: 0.9rem;
+}
